@@ -8,7 +8,7 @@
 	<style>
 		*{margin:0;padding:0;box-sizing:border-box;}
 		body{
-			background:black;
+			background:url(images/43.jpg);
 		}
 		.wrap{
 			perspective:1600PX;
@@ -81,7 +81,9 @@
 		#List li > div{
 			width:100%;
 			height:100%;
+			color:#f60;
 		}
+		#wrap{padding:20px;}
 		h1{
 			text-align:center;
 			margin-top:20px;
@@ -89,7 +91,7 @@
 	</style>
 </head>
 <body>
-	<div class="wrap">
+	<div class="wrap" id="box">
 		<ul id="List">
 			<li></li>
 			<li></li>
@@ -99,13 +101,54 @@
 			</li>
 			<li>
 				<div>
-					<h1>加藤邦简历</h1>
+					<h1>表白墙</h1>
+					<div id="wrap"></div>
 				</div>
 			</li>
 		</ul>
 	</div>
 	<script>
-		
+	window.onload = function(){
+		var wrap = document.getElementById("wrap");
+		var box = document.getElementById("box");
+		var arr = [];
+        arr.push('心中藏之,无日忘之');
+        arr.push('情不知所起,一往而深.');
+        arr.push('亲爱的，我其实关注你很久了!');
+        arr.push('祝你有诗有歌有远方，有酒有肉有姑娘!');
+        arr.push('能够遇见你，对我来说是最大的幸福。有了你，我的生活变的绚丽多彩，有了你，世界变得如此迷人。你是我的世界，我的世界是你。我愿意用自己的一生，好好的陪着你，爱着你。陪你到你想去的地方，用心走完我们人生的余下的旅程。在未来的日子里，也许什么都无法确定，但唯一可以确定的是，我爱的人是你，无论现在还是将来，我想我这里都会是你最温暖的港湾，都是为你遮风避雨的城墙。无论狂风，无论暴雨。我都会陪在你的身旁，让你不会感到丝毫的担心和惶恐。我会珍惜和你在一起的每一刻，每一分，每一秒');
+        var arrL = arr.length;
+        var index = 0;
+        var post = 0;
+        var timer = null;
+        var html = "";
+        var row = 0;
+	    var L = arr[0].length;
+        function priInter(){
+        	while(row<index){
+        		html += arr[row++] + '<br/>';
+        	}
+        	wrap.innerHTML = html + arr[index].substring(0,post);
+        	if(L==post){
+    			index++;
+    			post = 0;
+        		if(index<arrL){
+	        		L = arr[index].length;
+        			timer = setTimeout(priInter,150);
+        		}else{
+        			clearTimeout(timer);
+        		}
+        	}else{
+        		post++;
+        		timer = setTimeout(priInter,150);
+        	}
+        }
+        box.onmouseover = function(){
+        	setTimeout(function(){
+        		priInter();
+        	},1000)
+        }
+	}
 	</script>
 </body>
 </html>
