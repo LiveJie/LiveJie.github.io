@@ -32,7 +32,8 @@
 
 		/*search start*/
 		#search{width:100%;height:130px;margin:0 auto;background:#fff;}
-		#search .s_logo{float:left;margin-left:172px;}
+		#search .s-box{min-width: 1230px;margin:0 auto;width:1230px;}
+		#search .s_logo{float:left;}
 		#search .s_box{height:130px;float:left;margin-left:30px;}
 		#search .s_box .s_text{margin-top:40px;position:relative;}
 		#search .s_box .s_text #s_list{position:absolute;margin-top:38px;background:#fff;width:500px;border:1px solid #999;height:90px;display:none;}
