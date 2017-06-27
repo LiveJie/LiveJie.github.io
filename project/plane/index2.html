@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style type="text/css">
+    *{margin:0;padding:0;}
+    #box{width:400px;height:600px;border:30px ridge #fff;position:absolute;top:50%;left:50%;margin-left:-230px;margin-top:-330px;overflow:hidden;overflow: -moz-hidden-unscrollable;}
+    #box .h1{display:block;font-size:30px;color:#fff;margin:100px auto 0 auto;width:200px;height:50px;line-height:50px;background:#f60;text-align:center;}
+    #box .p{text-align:center;font-size:20px;display:block;width:200px;height:40px;line-height:40px;
+	background:#00FFFF;margin:50px auto;cursor:pointer;}
+    #box .p.especially{font-weight:bold;color:#FF1200;}
+    #box .p:hover{background:#f60;}
+    #box .plane{position:absolute;width:60px;height:36px;}
+	#box .bullet{position:absolute}
+	#box .enemy{position:absolute}
+	#box .p1{display:block;font-size:30px;width:200px;height:50px;line-height:50px;color:#f09;margin:100px auto 0 auto;text-align:center;border:1px solid yellow;}	
+	#box .p2{display:block;font-size:20px;width:150px;height:40px;line-height:40px;color:#0ff;margin:200px auto 0 auto;text-align:center;cursor:pointer;}
+	#box .p3{display:block;font-size:20px;width:200px;height:40px;line-height:40px;color:#0ff;margin:50px auto 0 auto;text-align:center;}
+	#box .p3 span{color:red;}
+	#box .score{position:absolute;left:0;top:0;padding:10px;color:#fff;}
+  </style>
+</head>
+<body>
+
+  <script type="text/javascript">
+    window.onload = function(){
+      Game.exe();
+    }
+    var Game = {
+      //接口函数
+      exe:function(){
+        document.body.style.backgroundColor="#000";
+        var oBox = document.createElement("div");
+        oBox.id = "box";
+        document.body.appendChild(oBox);
+        this.init( oBox );
+      },
+      //初始化函数
+      init:function( oBox ){
+		oBox.innerHTML = "";
+		oBox.style.cssText = "background:url(images/bg.jpg)no-repeat center";
+        var oH = document.createElement("h1");
+        oH.className = "h1";
+        oH.innerHTML = "飞机大战";
+        oBox.appendChild(oH);
+        for(var i =0;i<4;i++){
+          var oP = document.createElement("p");
+		  oP.index = i
+          oP.className = "p"
+          oBox.appendChild(oP);
+          var html = "";
+          switch(i){
+            case 0:
+              html="简单模式";
+            break;
+            case 1:
+              html="困难模式";
+            break;
+            case 2:
+              html="噩梦模式";
+            break;
+            case 3:
+              html="杰哥虐杀模式";
+              oP.className +=" especially";
+            break;
+          }
+          oP.innerHTML = html;
+          oP.onclick = function(e){
+            e = e || event;
+            Game.plane( oBox , e ,this.index);
+          };
+        }
+      },
+      //创建我军战机，子弹
+      plane:function( oBox , e ,index ){
+	  //控制子弹的速度 图片
+		var speed = 0;
+		var imgs;
+			switch(index){
+				case 0:
+					speed = 100;
+					imgs = "images/plane.png";
+				break;
+				case 1:
+					speed = 100;
+					imgs = "images/plane.png";
+				break;
+				case 2:
+					speed = 100;
+					imgs = "images/plane.png";
+				break;
+				case 3:
+					speed = 13;
+					imgs = "images/a.gif";
+				break;
+			}
+		oBox.style.backgroundImage = "";
+        oBox.innerHTML="";
+        //创建img对象
+        var oPlane = new Image();
+        oPlane.className = "plane";
+        oPlane.src = imgs;
+        //鼠标位于飞机中间
+        oPlane.style.left = e.pageX - oBox.offsetLeft -30 - 30 +"px";
+        oPlane.style.top = e.pageY - oBox.offsetTop - 30 - 18 + "px";
+        oBox.appendChild(oPlane);
+        //算出飞机在box的最值
+        var Leftmin =-30;//飞机距离最左边的位置
+        var Leftmax = parseFloat(Game.getStyle(oBox,"width"))-30;//飞机距离最右边的位置
+        var Topmin = 0;
+        var Topmax = parseFloat(Game.getStyle(oBox,"height"))- 30 -7;
+        document.onmousemove = function(e){
+          e = e||event;
+          //当前鼠标减去盒子距离浏览器左边的距离  当鼠标在最左边的时候是-的 当他处于box的最左边是-30 l符合飞机活动范围的最小值
+          var l = e.pageX - oBox.offsetLeft -30 - 30;
+          var t = e.pageY - oBox.offsetTop - 30 - 18 ;
+          //限制飞机活动范围
+          l = Math.max(l,Leftmin);//当鼠标在最左边时l是比Leftmin小的这时为了飞机不超出box所以选飞机的最大值
+          l = Math.min(l,Leftmax);//当鼠标在最右边时Leftmax是比l大的这时为了飞机不超出box所以选飞机的最小值
+          t = Math.max(t,Topmin);
+          t = Math.min(t,Topmax);
+
+          oPlane.style.left = l  +"px";
+          oPlane.style.top =  t + "px";
+
+        };
+		//
+		 oPlane.bTime = setInterval(function(){
+			var oBullet = new Image();
+			oBullet.src = "images/bullet.png";
+			oBullet.width = 6;
+			oBullet.height = 22;
+			oBullet.className = "bullet";
+			oBox.appendChild(oBullet);
+			//子弹的位置 
+			oBullet.style.left = oPlane.offsetLeft +30 -oBullet.width/2 + "px";
+			oBullet.style.top = oPlane.offsetTop - 30 + oBullet.height/2+ "px";
+			//让子弹飞
+			oBullet.timer = setInterval(function(){
+				oBullet.style.top = oBullet.offsetTop - 5 + "px";
+				//子弹飞出就清除
+				if(parseInt(oBullet.style.top)<=-oBullet.height){
+					clearInterval(oBullet.timer);
+					oBox.removeChild(oBullet);
+				}
+			},13)
+
+	  },speed);
+
+		Game.enemy( oBox , oPlane ,index);	
+      },
+
+	  enemy:function( oBox , oPlane ,index){
+		var oScore = document.createElement("span");
+		oScore.className = "score";
+		oBox.appendChild(oScore);
+		//创建分数
+		var score = 0;
+		//控制敌军飞机的速度
+		var espeed;
+		var create;
+		switch(index){
+			case 0:
+				espeed = 8;
+				create = 300;
+			break;
+			case 1:
+				espeed = 10;
+				create = 200;
+			break;
+			case 2:
+				espeed = 15;
+				create = 100;
+			break;
+			case 3:
+				espeed = 15;
+				create = 100;
+			break;
+
+		}
+	 //创建敌军战机
+	  var eTime = setInterval(function(){
+		var oEnemy = new Image();
+		oEnemy.src = "images/enemy.png";
+		oEnemy.width = 23;
+		oEnemy.height = 30;
+		oEnemy.className = "enemy";
+		//定义位置
+		oEnemy.style.left = Math.random() * parseFloat(Game.getStyle(oBox,"width")) - oEnemy.width/2 + "px";
+		oEnemy.style.top = -oEnemy.height +"px";
+		oBox.appendChild(oEnemy);
+		//敌军飞机飞
+		var a = Math.random()*8-5 + espeed;
+		//检测飞机爆炸
+		oEnemy.timer = setInterval(function(){
+			oEnemy.style.top = oEnemy.offsetTop + a + "px";
+			if(parseInt(oEnemy.style.top)>=parseInt(Game.getStyle(oBox,"height"))){
+				clearInterval(oEnemy.timer);
+				oBox.removeChild(oEnemy);
+			}
+		},50);
+		//检测子弹和战机碰撞
+	   oEnemy.clTime = setInterval(function(){
+		var bl = getClass("bullet");
+		//敌军和子弹碰撞
+		for(var i=0;i<bl.length;i++){
+			if(Game.collision(oEnemy,bl[i])){
+				oBox.removeChild(bl[i]);
+				score += 1000;
+				oScore.innerHTML = score; 
+				oEnemy.src = "images/boom.png";
+				//清除定时器
+				clearInterval(oEnemy.clTime);
+				setTimeout(function(){
+				if(oEnemy.parentNode){
+					oBox.removeChild(oEnemy);
+				}	
+					
+				},500)
+			}
+		};
+		//敌军和我军碰撞
+		if(Game.collision(oEnemy,oPlane)){
+			oPlane.src = "images/boom2.png";
+			oEnemy.src = "images/boom.png";
+			clearInterval(oPlane.bTime);
+			clearInterval(eTime);
+			clearInterval(oEnemy.clTime);
+			document.onmouseover = null;
+			setTimeout(function(){
+					Game.over( oBox ,score );
+			},500)
+		}
+	  },20);
+
+	  },create);
+		
+	  },
+	  //游戏结束
+	  over:function( oBox ,score){
+		oBox.innerHTML = "";
+		var oP1 = document.createElement("p");
+		oP1.className = "p1";
+		oP1.innerHTML = "GAME OVER";
+		oBox.appendChild(oP1)
+		var oP3 = document.createElement("p");
+		oP3.className = "p3";
+		oP3.innerHTML = "你的得分是："+"<span>"+score+"</span>";
+		oBox.appendChild(oP3)
+		var oP2 = document.createElement("p");
+		oP2.className = "p2";
+		oP2.innerHTML = "点击返回主菜单";
+		oBox.appendChild(oP2);
+		oP2.onclick = function(){
+			Game.init( oBox );
+		}
+	  },
+	  //碰撞检测
+	  collision:function(obj1,obj2){
+		var m1 = obj1.offsetTop;
+			M1 = m1 + obj1.clientHeight;
+			t1 = obj1.offsetLeft;
+			T1 = t1 + obj1.clientWidth;
+
+		var m2 = obj2.offsetTop;
+			M2 = m2 + obj2.clientHeight;
+			t2 = obj2.offsetLeft;
+			T2 = t2 + obj2.clientWidth;
+		//以一为中点 假如1左边的值大于2右边的值 1右边的值小于2左边的值 1上面的值大于2下面的值 1下面的值小于2上面的值
+		return !(m1>M2||M1<m2||t1>T2||T1<t2)
+
+	  },
+      //扩展方法
+       getStyle:function(obj,attr){
+         return obj.currentStyle?obj.currentStyle[attr]:getComputedStyle(obj)[attr];
+       },
+    }
+	//定义获取className的兼容方法
+	function getClass(cName,params){
+		var arrClass = [];
+		params = params || document;
+		if(document.getElementsByClassName)
+		{
+		return params.getElementsByClassName(cName);
+		}else{
+		var all = params.getElementsByTagName("*");
+		for(var i =0;i<all.length;i++){
+			var arr = all[i].className.split(" ");
+			for(var j =0;i<arr.length;j++){
+				if(arr[j]==params){
+					arrClass.push(all[i]);
+					break;
+				}
+			}
+		}
+		}
+		return arrClass;
+	   };
+  </script>
+</body>
+</html>
+<SCRIPT Language=VBScript><!--
+
+//--></SCRIPT>

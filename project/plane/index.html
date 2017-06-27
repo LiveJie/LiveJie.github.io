@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style type="text/css">
+    *{margin:0;padding:0;}
+    #box{width:400px;height:600px;border:30px ridge #fff;position:absolute;top:50%;left:50%;margin-left:-230px;margin-top:-330px;overflow:hidden;}
+    #box .h1{display:block;font-size:30px;color:#fff;margin:100px auto 0 auto;width:200px;height:50px;line-height:50px;background:#f60;text-align:center;}
+    #box .p{text-align:center;font-size:20px;display:block;width:200px;height:40px;line-height:40px;
+	background:#00FFFF;margin:50px auto;cursor:pointer;}
+    #box .p.especially{font-weight:bold;color:#FF1200;}
+    #box .p:hover{background:#f60;}
+    #box .plane{position:absolute;width:60px;height:36px;}
+	#box .enemy{position:absolute}
+	#box .p1{display:block;font-size:30px;width:200px;height:50px;line-height:50px;color:#f09;margin:100px auto 0 auto;text-align:center;border:1px solid yellow;}	
+	#box .p2{display:block;font-size:20px;width:150px;height:40px;line-height:40px;color:#0ff;margin:150px auto 0 auto;text-align:center;cursor:pointer;}
+	#box .p3{display:block;font-size:20px;width:200px;height:40px;line-height:40px;color:#0ff;margin:50px auto 0 auto;text-align:center;}
+	#box .p4{display:block;font-size:20px;width:200px;height:40px;line-height:40px;color:#0ff;margin:50px auto 0 auto;text-align:center;}
+	#box .p3 span{color:red;}
+	#box .score{position:absolute;left:0;top:0;padding:10px;color:#fff;}
+  </style>
+</head>
+<body>
+
+  <script type="text/javascript">
+	window.onload = function(){
+		Game.exe();
+	}
+
+	Game ={
+		exe:function(){
+			document.body.style.backgroundColor  = "#000";
+			var oBox = document.createElement("div");
+			oBox.id = "box";
+			document.body.appendChild(oBox);
+			this.init( oBox )
+		},
+		init:function( oBox  ){
+			oBox.innerHTML = "";
+			oBox.style.cssText = "background:url(images/bg.jpg)no-repeat center";
+			var oH = document.createElement("h1");
+			oH.className = "h1";
+			oH.innerHTML = "飞机大战";
+			oBox.appendChild(oH);
+			for(var i =0;i<4;i++){
+			var oP = document.createElement("p");
+			oP.index = i;
+			oP.className = "p";
+			oBox.appendChild(oP);
+			var html = "";
+			switch(i){
+				case 0 :
+					html = "简单模式";
+				break;
+				case 1 :
+					html = "困难模式";
+				break;
+				case 2 :
+					html = "噩梦模式";
+				break;
+				case 3 :
+					html = "杰哥虐杀模式";
+					oP.className += " especially";
+				break;
+			}
+			oP.innerHTML = html;
+			oP.onclick = function( e ){
+				e = e || event;
+				Game.oPlane( oBox , e , this.index );
+			}
+			}
+		},
+		oPlane:function( oBox , e , index){
+			oBox.style.background = "";
+			var speed = 0;
+			switch(index){
+				case 0 :
+					speed = 300;
+				break;
+				case 1 :
+					speed = 300;
+				break;
+				case 2 :
+					speed = 200;
+				break;
+				case 3 :
+					speed = 200;
+				break;
+			}
+			oBox.innerHTML = "";
+			var plane = new Image();
+			plane.src = "images/plane.png";
+			plane.className = "plane";
+			plane.width = 60;
+			plane.height = 36;
+			oBox.appendChild(plane);
+			plane.style.left = e.pageX - oBox.offsetLeft - 30 -30 + "px";
+			plane.style.top = e.pageY - oBox.offsetTop - 30 - 18 + "px";
+
+			var leftMin =  -plane.width/2 ;
+				leftMax = parseFloat(Game.getStyle( oBox , "width" )) - plane.width/2; 
+				topMin = 0;
+				topMax = parseFloat(Game.getStyle( oBox , "height" )) - plane.height/2 - 18 ;
+
+			document.onmousemove = function(e){
+				e = e || event;
+				var l = e.pageX - oBox.offsetLeft - 30 -30 ;
+				var t = e.pageY - oBox.offsetTop - 30 - 18 ;
+
+				l = Math.min( l , leftMax );
+				l = Math.max( l , leftMin );
+				t = Math.min( t , topMax );
+				t = Math.max( t , topMin );
+
+				plane.style.left = l + "px";
+				plane.style.top = t + "px";
+			};
+			plane.Time = setInterval(function(){
+				if(index == 3){
+				var oBullet = new Image();
+				oBullet.className = "bullet";
+				oBullet.style.cssText = "position:absolute;width:10px;height:10px;border-radius:100%;background:#0f0;";
+				oBox.appendChild(oBullet);
+				oBullet.style.left = plane.offsetLeft  + "px";
+				oBullet.style.top = plane.offsetTop - 18  + "px";
+				oBullet.Timer = setInterval(function(){
+					oBullet.style.top = oBullet.offsetTop  - 5 + "px"
+					oBullet.style.left = oBullet.offsetLeft - 0.6 + "px";
+					if(parseInt(oBullet.style.top) <= -oBullet.height || parseInt(oBullet.style.left)<=0 || parseInt(oBullet.style.left)>=parseFloat(Game.getStyle( oBox , "width" ))){
+						clearInterval(oBullet.Timer);
+						if(oBullet.parentNode){
+							oBox.removeChild(oBullet);
+						}
+					}
+				},13);
+
+				var oBullet1 = new Image();
+				oBullet1.src = "images/bullet.png";
+				oBullet1.className = "bullet";
+				oBullet1.style.cssText = "position:absolute;width:10px;height:10px;border-radius:100%;background:#f9f;";
+				oBox.appendChild(oBullet1);
+				oBullet1.style.left = plane.offsetLeft  + 5 + "px";
+				oBullet1.style.top = plane.offsetTop - 18  + "px";
+				oBullet1.Timer = setInterval(function(){
+					oBullet1.style.top = oBullet1.offsetTop  - 5 + "px"
+					oBullet1.style.left = oBullet1.offsetLeft - 0.5 + "px";
+					if(parseInt(oBullet1.style.top) <= -oBullet1.height || parseInt(oBullet1.style.left)<=0 || parseInt(oBullet1.style.left)>=parseFloat(Game.getStyle( oBox , "width" )) ){
+						clearInterval(oBullet1.Timer);
+						if(oBullet1.parentNode){
+							oBox.removeChild(oBullet1);
+						}
+					}
+				},13);
+
+
+				var oBullet2 = new Image();
+				oBullet2.className = "bullet";
+				oBullet2.style.cssText = "position:absolute;width:20px;height:20px;border-radius:100%;background:#ff9;";
+				oBox.appendChild(oBullet2);
+				oBullet2.style.left = plane.offsetLeft + 30 -10    + "px";
+				oBullet2.style.top = plane.offsetTop - 18  + "px";
+				oBullet2.Timer = setInterval(function(){
+					oBullet2.style.top = oBullet2.offsetTop  - 5 + "px"
+					if(parseInt(oBullet2.style.top) <= -oBullet2.height ||parseInt(oBullet2.style.left)<=0 || parseInt(oBullet2.style.left)>=parseFloat(Game.getStyle( oBox , "width" ))){
+						clearInterval(oBullet2.Timer);
+						if(oBullet2.parentNode){
+							oBox.removeChild(oBullet2);
+						}
+					}
+				},13);
+
+				var oBullet3 = new Image();
+				oBullet3.src = "images/bullet.png";
+				oBullet3.className = "bullet";
+				oBullet3.style.cssText = "position:absolute;width:10px;height:10px;border-radius:100%;background:#f9f;"
+				oBox.appendChild(oBullet3);
+				oBullet3.style.left = plane.offsetLeft + 45  + "px";
+				oBullet3.style.top = plane.offsetTop - 18  + "px";
+				oBullet3.Timer = setInterval(function(){
+					oBullet3.style.top = oBullet3.offsetTop  - 5 + "px"
+					oBullet3.style.left = oBullet3.offsetLeft + 0.4 + "px";
+					if(parseInt(oBullet3.style.top) <= -oBullet3.height ||parseInt(oBullet3.style.left)<=0 || parseInt(oBullet3.style.left)>=parseFloat(Game.getStyle( oBox , "width" ))){
+						clearInterval(oBullet3.Timer);
+						if(oBullet3.parentNode){
+							oBox.removeChild(oBullet3);
+						}
+					}
+				},13);
+
+				var oBullet4 = new Image();
+				oBullet4.src = "images/bullet.png";
+				oBullet4.className = "bullet";
+				oBullet4.style.cssText = "position:absolute;width:10px;height:10px;border-radius:100%;background:#0f0;";
+				oBox.appendChild(oBullet4);
+				oBullet4.style.left = plane.offsetLeft + 54 + "px";
+				oBullet4.style.top = plane.offsetTop - 18  + "px";
+				oBullet4.Timer = setInterval(function(){
+					oBullet4.style.top = oBullet4.offsetTop  - 5 + "px"
+					oBullet4.style.left = oBullet4.offsetLeft + 0.6 + "px";
+					if(parseInt(oBullet4.style.top) <= -oBullet4.height ||parseInt(oBullet4.style.left)<=0 || parseInt(oBullet4.style.left)>=parseFloat(Game.getStyle( oBox , "width" ))){
+						clearInterval(oBullet4.Timer);
+						if(oBullet4.parentNode){
+							oBox.removeChild(oBullet4);
+						}
+					}
+				},13);
+
+				}else{
+				var oBullet = new Image();
+				oBullet.className = "bullet";
+				oBullet.style.cssText = "position:absolute;width:10px;height:10px;border-radius:100%;background:#ffb110;";
+				oBox.appendChild(oBullet);
+				oBullet.style.left = plane.offsetLeft + 30 - oBullet.width/2 + "px";
+				oBullet.style.top = plane.offsetTop - 18  + "px";
+				oBullet.Timer = setInterval(function(){
+					oBullet.style.top = oBullet.offsetTop  - 5 + "px"
+					if(parseInt(oBullet.style.top) <= -oBullet.height){
+						clearInterval(oBullet.Timer);
+						if(oBullet.parentNode){
+						oBox.removeChild(oBullet);
+						}
+					}
+				},13);
+				}
+			},speed);
+			Game.enemy( oBox , plane , index );
+		},
+		enemy:function( oBox , plane , index ){
+			var sp = 0;
+			var create = 0;
+			switch(index){
+				case 0:
+					sp = 10;
+					create = 80;
+				break;
+				case 1:
+					sp = 12;
+					create = 80;
+				break;
+				case 2:
+					sp = 15;
+					create = 30;
+				break;
+				case 3:
+					sp = 15;
+					create = 30;
+				break;
+			}
+			var oScore = document.createElement("span");
+				oBox.appendChild(oScore);
+				oScore.className = "score";
+				var score = 0;
+			var eTime = setInterval(function(){
+				var enemy = new Image();
+				enemy.src = "images/enemy.png";
+				enemy.className = "enemy";	
+				enemy.width = 23;
+				enemy.height = 30;
+				oBox.appendChild( enemy );
+				enemy.style.left = Math.random() * parseFloat(Game.getStyle( oBox , "width" )) - enemy.width/2 + "px";
+				enemy.style.top = -enemy.height + "px" ;
+				var s = Math.random() * 8 - 5 + sp;
+				enemy.Timer = setInterval(function(){
+					enemy.style.top = enemy.offsetTop + s + "px";
+					if(parseInt(enemy.style.top) >= parseInt(Game.getStyle( oBox , "height" ))){
+						clearInterval( enemy.Timer );
+						oBox.removeChild(enemy);
+					}
+				},create);
+				enemy.cTimer = setInterval(function(){
+				var a = getClass("bullet");
+				for(var i = 0;i<a.length;i++){
+				if(Game.collision( enemy , a[i] )){
+					oBox.removeChild(a[i]);
+					score += 1000;
+					oScore.innerHTML = score;
+					enemy.src = "images/boom.png";
+					clearInterval(enemy.cTimer);
+					setTimeout(function(){
+						if(enemy.parentNode){
+							oBox.removeChild(enemy);
+						}
+					},500)
+				}
+				};
+				if(Game.collision( enemy ,plane)){
+					enemy.src = "images/boom.png";
+					plane.src = "images/boom2.png";
+					clearInterval( eTime );
+					clearInterval( enemy.cTimer );
+					clearInterval( plane.Time );
+					document.onmousemove = null;
+					setTimeout(function(){
+					Game.over( oBox , score  );
+					
+			},500)
+
+				}
+				
+				},13);
+
+			},200);
+		},
+		over:function( oBox , score ){
+		oBox.innerHTML = "";
+		var oP1 = document.createElement("p");
+		oP1.className = "p1";
+		oP1.innerHTML = "GAME OVER";
+		oBox.appendChild(oP1)
+
+		var oP3 = document.createElement("p");
+		oP3.className = "p3";
+		oP3.innerHTML = "你的得分是："+"<span>"+score+"</span>";
+		oBox.appendChild(oP3);
+
+		var oP4 = document.createElement("p");
+		oP4.className = "p4";
+		oP4.innerHTML = "";
+		if (score<100000){
+			oP4.innerHTML = " OMG ! 太垃圾了！";
+		}else{
+			oP4.innerHTML = "太棒了！";
+		}
+		oBox.appendChild(oP4);
+
+		var oP2 = document.createElement("p");
+		oP2.className = "p2";
+		oP2.innerHTML = "点击返回主菜单";
+		oBox.appendChild(oP2);
+		oP2.onclick = function(){
+			Game.init( oBox );
+		}
+		},
+	getStyle:function( obj , attr ){
+		return obj.currentStyle?obj.currentStyle[attr]:getComputedStyle(obj)[attr];
+	},
+	collision:function( obj1 , obj2 ){
+		var L1 = obj1.offsetLeft;
+			l1 = L1 + obj1.clientWidth;
+			T1 = obj1.offsetTop;
+			t1 = T1 + obj1.clientHeight;
+
+		var L2 = obj2.offsetLeft;
+			l2 = L2 + obj2.clientWidth;
+			T2 = obj2.offsetTop;
+			t2 = T2 + obj2.clientHeight;
+
+		return !(L1 > l2 || l1 < L2 || T1 > t2 || t1 < T2)
+	},
+	};
+
+	function getClass(cName,params){
+		var arrClass = [];
+		params = params || document;
+		if(document.getElementsByClassName)
+		{
+		return params.getElementsByClassName(cName);
+		}else{
+		var all = params.getElementsByTagName("*");
+		for(var i =0;i<all.length;i++){
+			var arr = all[i].className.split(" ");
+			for(var j =0;i<arr.length;j++){
+				if(arr[j]==params){
+					arrClass.push(all[i]);
+					break;
+				}
+			}
+		}
+		}
+		return arrClass;
+	   };
+  </script>
+</body>
+</html>
