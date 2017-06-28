@@ -48,8 +48,8 @@
 			.info-list .info-item .cont .img:after{content:"";position: absolute; top:0;left:0;box-shadow: 0 0 0 2px rgba(255,255,255,.1);opacity: 0;transform: scale(.9);width: 100%;height:100%;border-radius:100%;}
 			.info-list .info-item .cont .img:hover{transform: scale(.93);background: rgba(255,255,255,.05);    color: #fff;}
 			.info-list .info-item .cont .alt{margin-top:20px;text-align: center;font-size:18px}
-			.info-list .info-item .cont .img:hover:after{animation: effect1 0.8s ease-out 75ms;}
-			.info-list .info-item .cont .img:hover span:after{animation: effect 0.8s ease-out 75ms;}
+			.info-list .info-item .cont .img:hover:after{animation: effect1 0.8s ease-out 75ms;-webkit-animation: effect1 0.8s ease-out 75ms;}
+			.info-list .info-item .cont .img:hover span:after{animation: effect 0.8s ease-out 75ms;-webkit-animation: effect 0.8s ease-out 75ms;}
 			@keyframes effect
 			{
 			0%{opacity:0.5;transform: scale(.9);}
@@ -68,7 +68,7 @@
 			.p3-left{width:300px;position: relative;padding:5px;color:#fff;}
 			.top3{top:70px;}
 			.p3-box{width:242px;height:242px;border:4px dashed #999;border-radius: 100%;position: relative;margin:0 auto;}
-			.p3-rotate{width:242px;height:242px;border-radius: 100%;position: relative;margin:0 auto;animation: myrotate 15s infinite linear;}
+			.p3-rotate{width:242px;height:242px;border-radius: 100%;position: relative;margin:0 auto;animation: myrotate 15s infinite linear;-webkit-animation: myrotate 15s infinite linear;}
 			@keyframes myrotate
 			{
 			0%{transform: rotateZ(0);}
@@ -84,7 +84,7 @@
 			.p3-rotate li:nth-of-type(6){top:37px;left:-13px;background:rgba(200,200,169,0.5)}
 
 			.p3-box2{width:142px;height:142px;border:4px dashed #999;border-radius: 100%;position:absolute;top:22%;left:26%;}
-			.p3-rotate2{width:142px;height:142px;border-radius: 100%;position:absolute;top:-3px;left:-4px;animation: myrotate2 15s infinite linear;}
+			.p3-rotate2{width:142px;height:142px;border-radius: 100%;position:absolute;top:-3px;left:-4px;animation: myrotate2 15s infinite linear;-webkit-animation: myrotate2 15s infinite linear;}
 			@keyframes myrotate2
 			{
 			0%{transform: rotateZ(0);}
@@ -101,7 +101,7 @@
 			.p4-content{width:100%;position: absolute;top:150px;}
 			.p4-box{width:750px;height:350px;background:#F2F4F5;margin:0 auto;border:1px solid #eee;border-radius:10px;color:#945c4c;box-shadow: 0 0 25px rgba(0,0,0,.5);transform-style: preserve-3d;display:flex;}
 			.p4-box:hover{box-shadow: 0 0 5em rgba(0,0,0,0.5) inset;}
-			.p4-content .lr{animation:lr 2s  linear}
+			.p4-content .lr{animation:lr 2s  linear;-webkit-animation:lr 2s  linear}
 			@keyframes lr
 			{
 			0%{transform: rotateY(0);opacity:0}
