@@ -453,7 +453,8 @@
 						Y = event.changedTouches[0].clientY;
 					    dell = Y - y;
 					    var l = top + dell;
-						$("#wrap").css("top", " "+ l + "px");
+						//$("#wrap").css("top", " "+ l + "px");
+						$("#wrap").animate({'top':""+ l + "px"},0);
 						if($("#wrap").offset().top>0){
 							$("#wrap").css("top", 0);
 						}
