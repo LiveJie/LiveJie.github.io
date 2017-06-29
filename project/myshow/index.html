@@ -133,12 +133,34 @@
 
 			.p7-item{max-width:300px;margin:0 auto;margin-top:20px;font-size:18px;text-align:center;line-height:35px;}
 			.p7-item p{line-height:30px;}
+			.l-em{display: none;font-style:normal;}
+			.header{width:100%;height:30px;line-height:30px;display:none;position:fixed;top:0;left:0;z-index:1;text-align:center;}
+			.s-span{width:100px;margin:0 auto;position: relative;}
+			.s-span:after{content:"";position:absolute;top:50%;right:15px;width:0;height:0;border-left:5px solid transparent;border-right:5px solid transparent;border-top:5px solid #fff;-webkit-transition:.5s all;transition:0.5s all;}
+			.s-span.change:after{transform:rotate(180deg);}
+			.footer{width:100%;height:50px;position:fixed;bottom:10px;text-align: center;}
+			.footer span{display:block;margin-top:30px;animation:fmove 1s infinite;}
+			@keyframes fmove{
+				0%{margin-top:30px;}
+				100%{margin-top:0;opacity:0}
+			}
+			/*媒体查询*/
 			@media screen and (max-width: 600px){
-			.p1-main{padding-top:20px;}
-			.p2-title{top:20px;}
+			#wrap{height:600%;overflow:hidden;position:absolute;transition:0.5s all;}
+			.wrap{height:600%;}
+			.l-em{display:block}
+			.header{display:block;margin-top:15px;}
+			#list{display: none;width:90%;height:30px;top:0;left:0;line-height: 30px;margin-top:45px;background:rgba(255,255,255,0.3);padding:0 5%;}
+			#list li{float:left;width:16.6666%;}
+			#list li div{width:100%;height:30px;transform: scale(1);opacity:1;border-radius: 0;text-align:center;background:rgba(255,255,255,0);}
+			#list .l-left{display: none;}
+			#list .l-on{opacity:0}
+			#list .l-box span{display:none}
+			#list .color{color:#74E2F5;}
+			.p1-main{padding-top:80px;}
+			.p2-title{display:none;}
 			.p2-content{top:80px;}
 			.p2-content .info-des{margin:0 auto;margin-top:30px;font-size:14px;line-height:20px;text-align: left;width:267px;}
-			.l-left{display: none;}
 			.p3-content{top:80px;}
 			.info{margin-top:50px;}
 			.p4-box div:nth-child(1),.p4-box div:nth-child(3){display: none;}
@@ -150,6 +172,11 @@
 		</style>
 	</head>
 	<body>
+		<div class="header">
+			<div class="show-nav">
+				<div class="s-span">首页</div>
+			</div>
+		</div>
 		<div id="wrap">
 			<div class="part part1">
 				<div class="p1-main">
@@ -319,60 +346,128 @@
 			</div>
 		</div>
 		<ul id="list">
-			<li>
+			<li data-id="首页">
 				<div class="l-box l-add">
 					<span class="iconfont">&#xe605;</span>
+					<em class="l-em color">首页</em>
 				</div>
 				<span class="l-left">首页</span>
 			</li>
-			<li>
+			<li data-id="关于我">
 				<div class="l-box">
 					<span class="iconfont">&#xe609;</span>
+					<em class="l-em">关于我</em>
 				</div>
 				<span class="l-left">关于我</span>
 			</li>
-			<li>
+			<li data-id="技术栈">
 				<div class="l-box">
 					<span class="iconfont">&#xe602;</span>
+					<em class="l-em">技术栈</em>
 				</div>
 				<span class="l-left">技术栈</span>
 			</li>
-			<li>
+			<li data-id="经历">
 				<div class="l-box">
 					<span class="iconfont">&#xe65a;</span>
+					<em class="l-em">经历</em>
 				</div>
 				<span class="l-left">经历</span>
 			</li>
-			<li>
+			<li data-id="作品集">
 				<div class="l-box">
 					<span class="iconfont">&#xe664;</span>
+					<em class="l-em">作品集</em>
 				</div>
 				<span class="l-left">作品集</span>
 			</li>
-<!-- 			<li>
+<!-- 			<li data-id="笔记">
 				<div class="l-box">
 					<span class="iconfont">&#xe600;</span>
 				</div>
 				<span class="l-left">笔记</span>
 			</li> -->
-			<li>
+			<li data-id="联系我">
 				<div class="l-box">
 					<span class="iconfont">&#xe604;</span>
+					<em class="l-em">联系我</em>
 				</div>
 				<span class="l-left">联系我</span>
 			</li>
-
-
 		</ul>
+		<footer class="footer">
+			<span class="iconfont">&#xe622;</span>
+		</footer>
 		<script src="js/jquery-1.11.3.min.js"></script>
 		<script src="js/jquery.mousewheel.js"></script>
 		<script>
-			setTimeout(function(){
-				$(document).scrollTop(0);
-			},50);
+
 			var $part  = $(".part");
 			var $li = $("#list li");
 			var lock = true;
+			var w = $(window).width();
+			ph();
+			function ph(){
+				w = $(window).width();
+				var h = $(window).height();
+				if(w<=600){
+					$(".part").css("height",h+'px')
+				}
+			}
+			//屏幕改变时候
+			$(window).resize(function(){
+				ph();
+			});
+			//头部导航点击
+			$(".s-span").click(function(){
+				if($(this).hasClass('change')){
+					$(this).removeClass('change');
+					$("#list").fadeOut();
+				}else{
+					$(this).addClass('change');
+					$("#list").fadeIn();
+				}
+			})
+
+			//绑定touch事件
+			var oBox = document.getElementById("#wrap");
+			$part.each(function(i){
+				$part[i].addEventListener('touchstart',start,false);
+		    	$part[i].addEventListener('touchmove',move,false);
+		    	$part[i].addEventListener('touchend',end,false);
+			})
+		    var y, Y, dell,top;
+			function start(e){
+				var index = $(this).index();
+				var e = e || window.event;
+			  	y = e.changedTouches[0].clientY;
+			}
+			//移动
+			function move(event){
+				var h = $(window).height();
+				var maxh = h * 5;
+				var c = c || window.event;
+				Y = event.changedTouches[0].clientY;
+			    dell = Y - y;
+			    var top = $("#wrap").offset().top;
+			    if(top<0 && Math.abs(top)<=maxh){
+				    $("#wrap").css("top", " "+ (dell+top) + "px");
+				}
+			}
+			//结束
+			function end(){
+				var h = $(window).height();
+				if(dell<0){
+					index++;
+					if(index>=5)index=5
+				}else{
+					index--
+					if(index<=0)index=0
+				}
+				$("#wrap").css("top", " "+ (-h*index) + "px");
+				var text = $li.eq(index).attr("data-id");
+				$(".s-span").text(text);
+			}
 			(function(){
 				$part.append('<div class="logo"></div>');
 				$(".l-box").mouseover(function(){
@@ -391,8 +486,19 @@
 					wH = $(window).height();
 				});
 				$li.click(function(){
+					var text = $(this).attr("data-id");
+					var h = $(window).height();
+					$(".s-span").text(text);
 					index = $(this).index();
-					move();
+					if(w>600){
+						move();
+					}else{
+						$("#wrap").css("top", " "+ (-h*index) + "px");
+						$(".l-em").removeClass('color');
+						$(this).find(".l-em").addClass("color");
+					}
+					//模拟点击
+					$(".s-span").trigger("click");
 				});
 				$(document).mousewheel(function(){
 					if(new Date() - nowTime > 500 ){
