@@ -146,7 +146,7 @@
 			}
 			/*媒体查询*/
 			@media screen and (max-width: 600px){
-			#wrap{height:600%;overflow:hidden;position:absolute;transition:0.5s all;}
+			#wrap{height:600%;overflow:hidden;position:absolute;}
 			.wrap{height:600%;}
 			.l-em{display:block}
 			.header{display:block;}
@@ -409,7 +409,6 @@
 
 			var $part  = $(".part");
 			var $li = $("#list li");
-			var lock = true;
 			var w = $(window).width();
 			ph();
 			function ph(){
@@ -443,6 +442,7 @@
 				$part[i].addEventListener('touchstart',function(e){
 					var index = $(this).index();
 					var e = e || window.event;
+					var top = $("#wrap").offset().top;
 				  	y = e.changedTouches[0].clientY;
 					document.addEventListener('touchmove',function(c){
 						c.preventDefault();
@@ -452,9 +452,13 @@
 						var c = c || window.event;
 						Y = event.changedTouches[0].clientY;
 					    dell = Y - y;
-					    var top = $("#wrap").offset().top;
-					    if(top<0 && Math.abs(top)<=maxh){
-						    $("#wrap").css("top", " "+ (dell+top) + "px");
+					    var l = top + dell;
+						$("#wrap").css("top", " "+ l + "px");
+						if($("#wrap").offset().top>0){
+							$("#wrap").css("top", 0);
+						}
+						if(Math.abs($("#wrap").offset().top)>=maxh){
+							$("#wrap").css("top", " "+ -maxh + "px");
 						}
 					});
 					document.addEventListener('touchend',function(c){
@@ -559,6 +563,9 @@
 						$(".l-em").removeClass('color');
 						$(this).find(".l-em").addClass("color");
 					}
+					if(index==5){
+						priInter();
+					}
 					//模拟点击
 					$(".s-span").trigger("click");
 				});
@@ -577,10 +584,7 @@
 						if(index == 3){
 							$(".p4-box").addClass('lr');
 						}
-						if(lock && index == $li.length){
-							lock = false;
-							priInter();
-						}
+						priInter();
 						move();
 					}
 				});
@@ -633,6 +637,10 @@
 		        			timer = setTimeout(priInter,150);
 		        		}else{
 		        			clearTimeout(timer);
+		        			index = 0;
+		        			post = 0;
+		        			row = 0;
+		        			html = "";
 		        		}
 		        	}else{
 		        		post++;
