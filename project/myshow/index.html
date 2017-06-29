@@ -460,13 +460,16 @@
 				if(dell<0){
 					if(index==4){
 						priInter();
+						$(".footer").hide();
 					}
 					index++;
-					if(index>=5)index=5;
+					if(index>5)index=5;
 				}else{
+					$(".footer").show();
 					index--
 					if(index<=0)index=0
 				}
+			console.log(index+"=="+dell)
 				$("#wrap").css("top", " "+ (-h*index) + "px");
 				var text = $li.eq(index).attr("data-id");
 				$(".s-span").text(text);
