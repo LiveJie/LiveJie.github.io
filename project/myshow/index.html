@@ -426,6 +426,7 @@
 			//头部导航点击
 			$(".s-span").click(function(e){
 				e.stopPropagation();
+				e.preventDefault();
 				if($(this).hasClass('change')){
 					$(this).removeClass('change');
 					$("#list").fadeOut();
