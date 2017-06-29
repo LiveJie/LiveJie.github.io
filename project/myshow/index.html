@@ -99,7 +99,7 @@
 			.info{width:300px;}
 			.info p{line-height: 50px;font-size: 18px;line-height: 24px;}
 			.p4-content{width:100%;position: absolute;top:150px;}
-			.p4-box{width:750px;height:350px;background:#F2F4F5;margin:0 auto;border:1px solid #eee;border-radius:10px;color:#945c4c;box-shadow: 0 0 25px rgba(0,0,0,.5);transform-style: preserve-3d;display:flex;}
+			.p4-box{width:750px;height:350px;background:#F2F4F5;margin:0 auto;border:1px solid #eee;border-radius:10px;color:#945c4c;box-shadow: 0 0 25px rgba(0,0,0,.5);transform-style: preserve-3d;display:flex; }
 			.p4-box:hover{box-shadow: 0 0 5em rgba(0,0,0,0.5) inset;}
 			.p4-content .lr{animation:lr 2s  linear;-webkit-animation:lr 2s  linear}
 			@keyframes lr
@@ -308,6 +308,13 @@
 							</a>
 						</li>
 						<li>
+							<h1>伪（miui商城）</h1>
+							<p>模仿miui商城</p>
+							<a href="https://livejie.github.io/project/miui/"  target="_blank" title="lete商城App">
+								<img src="images/w_link.svg" alt="">
+							</a>
+						</li>
+						<li>
 							<h1>lete商城</h1>
 							<p>在公司负责的pc项目:华侨华人留学生在这里购买中国商品，寄送到海外！代购/转运，更快，更省，更有保障！</p>
 							<a href="http://www.lete.com/mall"  target="_blank" title="lete商城">
@@ -318,13 +325,6 @@
 							<h1>3D炫酷动画</h1>
 							<p>基于css3+javascript的炫酷动画</p>
 							<a href="https://livejie.github.io/project/3d/index.html"  target="_blank" title="3D炫酷动画">
-								<img src="images/w_link.svg" alt="">
-							</a>
-						</li>
-						<li>
-							<h1>lete商城App</h1>
-							<p>基于lete商城对应的app。</p>
-							<a href="https://github.com/LiveJie/LiveJie.github.io/tree/master/App"  target="_blank" title="lete商城App">
 								<img src="images/w_link.svg" alt="">
 							</a>
 						</li>
@@ -406,7 +406,9 @@
 		<script src="js/jquery-1.11.3.min.js"></script>
 		<script src="js/jquery.mousewheel.js"></script>
 		<script>
-
+			setTimeout(function(){
+				$(document).scrollTop(0);
+			},50);
 			var $part  = $(".part");
 			var $li = $("#list li");
 			var w = $(window).width();
@@ -585,7 +587,6 @@
 						if(index == 3){
 							$(".p4-box").addClass('lr');
 						}
-						priInter();
 						move();
 					}
 				});
@@ -595,8 +596,7 @@
 					$("body,html").animate({
 						scrollTop:index * wH
 					},500);
-					if(lock && index == $li.length-1){
-						lock = false;
+					if(index == $li.length-1){
 						priInter();
 					}
 				};
