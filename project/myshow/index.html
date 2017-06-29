@@ -452,7 +452,6 @@
 						var c = c || window.event;
 						Y = event.changedTouches[0].clientY;
 					    dell = Y - y;
-					    console.log(dell)
 					    var top = $("#wrap").offset().top;
 					    if(top<0 && Math.abs(top)<=maxh){
 						    $("#wrap").css("top", " "+ (dell+top) + "px");
@@ -460,21 +459,29 @@
 					});
 					document.addEventListener('touchend',function(c){
 						var h = $(window).height();
-						if(dell<0){
-							if(index==4){
-								priInter();
-								$(".footer").hide();
+						if(Math.abs(dell)>20){
+							if(dell<0){
+								if(index==4){
+									priInter();
+									$(".footer").hide();
+								}
+								index++;
+								if(index>5)index=5;
+							}else{
+								$(".footer").show();
+								index--
+								if(index<=0)index=0
 							}
-							index++;
-							if(index>5)index=5;
+							$("#wrap").css("top", " "+ (-h*index) + "px");
+							
 						}else{
-							$(".footer").show();
-							index--
-							if(index<=0)index=0
+							return
 						}
-						$("#wrap").css("top", " "+ (-h*index) + "px");
 						var text = $li.eq(index).attr("data-id");
 						$(".s-span").text(text);
+						$(".l-em").removeClass('color');
+						$(".l-em").eq(index).addClass("color");
+						dell=null;
 					});
 			});
 			});
@@ -545,7 +552,7 @@
 					var h = $(window).height();
 					$(".s-span").text(text);
 					index = $(this).index();
-					if($(window).width()>=600){
+					if(w>600){
 						move();
 					}else{
 						$("#wrap").css("top", " "+ (-h*index) + "px");
