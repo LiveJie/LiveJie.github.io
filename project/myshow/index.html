@@ -458,8 +458,11 @@
 			function end(){
 				var h = $(window).height();
 				if(dell<0){
+					if(index==4){
+						priInter();
+					}
 					index++;
-					if(index>=5)index=5
+					if(index>=5)index=5;
 				}else{
 					index--
 					if(index<=0)index=0
