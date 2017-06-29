@@ -428,52 +428,94 @@
 					$("#list").fadeIn();
 				}
 			})
-
 			//绑定touch事件
 			var oBox = document.getElementById("#wrap");
-			$part.each(function(i){
-				$part[i].addEventListener('touchstart',start,false);
-		    	$part[i].addEventListener('touchmove',move,false);
-		    	$part[i].addEventListener('touchend',end,false);
-			})
 		    var y, Y, dell,top;
-			function start(e){
-				var index = $(this).index();
-				var e = e || window.event;
-			  	y = e.changedTouches[0].clientY;
-			}
-			//移动
-			function move(event){
-				var h = $(window).height();
-				var maxh = h * 5;
-				var c = c || window.event;
-				Y = event.changedTouches[0].clientY;
-			    dell = Y - y;
-			    var top = $("#wrap").offset().top;
-			    if(top<0 && Math.abs(top)<=maxh){
-				    $("#wrap").css("top", " "+ (dell+top) + "px");
-				}
-			}
-			//结束
-			function end(){
-				var h = $(window).height();
-				if(dell<0){
-					if(index==4){
-						priInter();
-						$(".footer").hide();
-					}
-					index++;
-					if(index>5)index=5;
-				}else{
-					$(".footer").show();
-					index--
-					if(index<=0)index=0
-				}
-			console.log(index+"=="+dell)
-				$("#wrap").css("top", " "+ (-h*index) + "px");
-				var text = $li.eq(index).attr("data-id");
-				$(".s-span").text(text);
-			}
+		    var h = $(window).height();
+			$part.each(function(i){
+				$part[i].addEventListener('touchstart',function(e){
+					var index = $(this).index();
+					var e = e || window.event;
+				  	y = e.changedTouches[0].clientY;
+					document.addEventListener('touchmove',function(c){
+						c.preventDefault();
+            			c.stopPropagation();
+						var h = $(window).height();
+						var maxh = h * 5;
+						var c = c || window.event;
+						Y = event.changedTouches[0].clientY;
+					    dell = Y - y;
+					    console.log(dell)
+					    var top = $("#wrap").offset().top;
+					    if(top<0 && Math.abs(top)<=maxh){
+						    $("#wrap").css("top", " "+ (dell+top) + "px");
+						}
+					});
+					document.addEventListener('touchend',function(c){
+						var h = $(window).height();
+						if(dell<0){
+							if(index==4){
+								priInter();
+								$(".footer").hide();
+							}
+							index++;
+							if(index>5)index=5;
+						}else{
+							$(".footer").show();
+							index--
+							if(index<=0)index=0
+						}
+						$("#wrap").css("top", " "+ (-h*index) + "px");
+						var text = $li.eq(index).attr("data-id");
+						$(".s-span").text(text);
+					});
+			});
+			});
+			// //绑定touch事件
+			// var oBox = document.getElementById("#wrap");
+		 //    var y, Y, dell,top;
+			// $part.each(function(i){
+			// 	$part[i].addEventListener('touchstart',start,false);
+		 //    	$part[i].addEventListener('touchmove',move,false);
+		 //    	$part[i].addEventListener('touchend',end,false);
+			// })
+			// function start(e){
+			// 	var index = $(this).index();
+			// 	var e = e || window.event;
+			//   	y = e.changedTouches[0].clientY;
+			// }
+			// //移动
+			// function move(event){
+			// 	var h = $(window).height();
+			// 	var maxh = h * 5;
+			// 	var c = c || window.event;
+			// 	Y = event.changedTouches[0].clientY;
+			//     dell = Y - y;
+			//     var top = $("#wrap").offset().top;
+			//     if(top<0 && Math.abs(top)<=maxh){
+			// 	    $("#wrap").css("top", " "+ (dell+top) + "px");
+			// 	}
+			// }
+			// //结束
+			// function end(){
+			// 	var h = $(window).height();
+			// 	if(dell<0){
+			// 		if(index==4){
+			// 			priInter();
+			// 			$(".footer").hide();
+			// 		}
+			// 		index++;
+			// 		if(index>5)index=5;
+			// 	}else{
+			// 		$(".footer").show();
+			// 		index--
+			// 		if(index<=0)index=0
+			// 	}
+			// 	$("#wrap").css("top", " "+ (-h*index) + "px");
+			// 	var text = $li.eq(index).attr("data-id");
+			// 	$(".s-span").text(text);
+			// }
+
 			(function(){
 				$part.append('<div class="logo"></div>');
 				$(".l-box").mouseover(function(){
@@ -540,7 +582,6 @@
 					}
 				};
 			})();
-
 
 				var wrap = document.getElementById("print");
 				var arr = [];
