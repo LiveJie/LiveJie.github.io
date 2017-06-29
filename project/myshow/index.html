@@ -424,7 +424,8 @@
 				ph();
 			});
 			//头部导航点击
-			$(".s-span").click(function(){
+			$(".s-span").click(function(e){
+				e.stopPropagation();
 				if($(this).hasClass('change')){
 					$(this).removeClass('change');
 					$("#list").fadeOut();
