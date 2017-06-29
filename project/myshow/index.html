@@ -545,7 +545,7 @@
 					var h = $(window).height();
 					$(".s-span").text(text);
 					index = $(this).index();
-					if(w>600){
+					if($(window).width()>=600){
 						move();
 					}else{
 						$("#wrap").css("top", " "+ (-h*index) + "px");
