@@ -43,6 +43,10 @@ window.onload = function(){
 			}
 			boxDom.style.left = boxDom.x + 'px';
 			boxDom.style.top = boxDom.y + 'px';
+			// boxDom.onclick = function(){
+			// 	var dom = arr.splice(arr.indexOf(this),1);//splice返回的是一个数组
+			// 	this.parentNode.removeChild(dom[0]);//所以数组后面要加[]
+			// }
 		}
 	}
 	function changeColoe(a){
