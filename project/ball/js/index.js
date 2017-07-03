@@ -1,3 +1,4 @@
+window.onload = function(){
 	for(var i=0;i<=10;i++){
 		var boxDom = document.createElement("div");
 		boxDom.className = "box";
@@ -6,8 +7,8 @@
 		//初始化小球
 		boxDom.x = 0;
 		boxDom.y = 0;
-		boxDom.xspeed = i+5;
-		boxDom.yspeed = i+5;
+		boxDom.xspeed = i+2;
+		boxDom.yspeed = i+2;
 	}
 	var boxArr = document.getElementsByClassName("box");
 	var arr = [].slice.call(boxArr);//使用[].slice.call()把一个类数组变成一个数组
@@ -15,7 +16,9 @@
 	function play(){
 		for(var i = 0 ; i < arr.length ; i++){
 			$(".box").eq(i).css({
+					background:"-webkit-radial-gradient("+color16()+","+color16()+","+color16()+")",
 					background:"radial-gradient("+color16()+","+color16()+","+color16()+")",
+					'-webkit-boxShadow':"0 0 5em "+color16()+"",
 					boxShadow:"0 0 5em "+color16()+""
 			})
 			var boxDom = arr[i];
@@ -43,7 +46,8 @@
 			boxDom.style.top = boxDom.y + 'px';
 		}
 	}
-	play();
+	//play();
+	//window.requestAnimationFrame(play);
 	setInterval(play,1000/30)
     function color16(){
         var r = Math.floor(Math.random()*256).toString(16);
@@ -54,3 +58,5 @@
         if(b.length<2)b = 'c'+r;
         return "#"+r+g+b;
     }
+	
+}
