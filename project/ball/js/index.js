@@ -59,13 +59,10 @@ window.onload = function(){
 	//window.requestAnimationFrame(play);
 	setInterval(play,1000/30)
     function color16(){
-        var r = Math.floor(Math.random()*256).toString(16);
-        var g = Math.floor(Math.random()*256).toString(16);
-        var b = Math.floor(Math.random()*256).toString(16);
-        if(r.length<2)r = 'a'+r;
-        if(g.length<2)g = 'b'+r;
-        if(b.length<2)b = 'c'+r;
-        return "#"+r+g+b;
+		var r = parseInt(Math.random()*256);
+		var g = parseInt(Math.random()*256);
+		var b = parseInt(Math.random()*256);
+		return "rgb("+r+","+g+","+b+")"
     }
 	
 }
