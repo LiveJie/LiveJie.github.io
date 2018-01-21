@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="initial-scale=1, maximum-scale=3, minimum-scale=1, user-scalable=no">
+	<title>简书</title>
+	<link rel="stylesheet" href="common.css">
+	<style>
+		* {
+			margin: 0;
+			padding: 0;
+		}
+		html,body{
+			width:100%;
+			height:100%;
+			background-color:#87b0a5;
+			background-image:url(3.jpg)
+		}
+		#box {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			font-size:0.16rem;
+			background-color:transparent;
+			color:#fff;
+			padding-top:0.1rem;
+		}
+	</style>
+</head>
+
+<body>
+	<div id="box"></div>
+	<audio src="./mp3/杨钰莹 - 最浪漫的事.mp3" id="myAudio" autoplay>
+		</audio>
+	<script src="rem.js"></script>
+	<script>
+		window.onload = function(){
+		var x = document.getElementById("myAudio");
+		var wrap = document.getElementById("box");
+		x.volume = 0.2;
+		// alert(x.volume);
+		var arr = [];
+		arr.push('想写点什么了');
+		arr.push('也许时光很巧');
+		arr.push('也许年纪到了');
+		arr.push('又或者');
+		arr.push('青春刚好！');
+		arr.push('');
+		arr.push('我多愁善感,');
+		arr.push('又豁达开朗。');
+		arr.push('看过很多截然不同，');
+		arr.push('又相差无几的故事。');
+		arr.push('真正的一见钟情，');
+		arr.push('并不是一眼就感觉爱情来了。');
+		arr.push('而是一个在内心世界，');
+		arr.push('不断清晰而模糊的身影。');
+		arr.push('它一直存在着，');
+		arr.push('只不过并不明显。');
+		arr.push('而如今，');
+		arr.push('他突然出现在你面前。');
+		arr.push('记忆很轻，');
+		arr.push('回忆却已久，');
+		arr.push('于是，');
+		arr.push('便有了相见恨晚！');
+		arr.push('  ');
+		arr.push('如果岁月能让你记住，');
+		arr.push('我曾经令你心动过的模样。');
+		arr.push('那真的已经足够！');
+		arr.push('没有了，我的小可爱。');
+		var arrL = arr.length;
+		var index = 0;
+		var post = 0;
+		var timer = null;
+		var html = "";
+		var row = 0;
+		var L = arr[0].length;
+		function priInter() {
+			while (row < index) {
+				html += arr[row++] + '<br/>';
+			}
+			wrap.innerHTML = html + arr[index].substring(0, post);
+			if (L == post) {
+				index++;
+				if(index>20){
+					wrap.style.transform="translate3d(0px, -100px, 0px)"
+				}
+				post = 0;
+				if (index < arrL) {
+					L = arr[index].length;
+					timer = setTimeout(priInter, 500);
+				} else {
+					clearTimeout(timer);
+					index = 0;
+					post = 0;
+					row = 0;
+					html = "";
+				}
+			} else {
+				post++;
+				timer = setTimeout(priInter, 300);
+			}
+		}
+		window.onload = setTimeout(function(){priInter()},1000);
+		}
+	</script>
+</body>
+
+</html>
