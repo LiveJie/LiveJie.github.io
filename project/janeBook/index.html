@@ -43,7 +43,7 @@
 		window.onload = function(){
 		var x = document.getElementById("myAudio");
 		var wrap = document.getElementById("box");
-		x.volume = 0.2;
+		x.volume = 0.5;
 		// alert(x.volume);
 		var arr = [];
 		arr.push('想写点什么了');
@@ -94,7 +94,7 @@
 				post = 0;
 				if (index < arrL) {
 					L = arr[index].length;
-					timer = setTimeout(priInter, 50);
+					timer = setTimeout(priInter, 500);
 				} else {
 					clearTimeout(timer);
 					index = 0;
@@ -104,7 +104,7 @@
 				}
 			} else {
 				post++;
-				timer = setTimeout(priInter, 30);
+				timer = setTimeout(priInter, 300);
 			}
 		}
 		window.onload = setTimeout(function(){priInter()},1000);
