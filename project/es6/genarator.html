@@ -1,0 +1,93 @@
+<html>
+
+<body>
+    <script>
+        // function* f(){
+        //     console.log("执行了！");
+        // }
+
+        // var genarator = f();
+
+        // setTimeout(function(){
+        //     genarator.next();
+        // },2000)
+
+        // // 
+
+        // function* f1(){
+        //     for(var i=0;true;i++){
+        //         var reset = yield i;
+        //         console.log(i+"=="+reset)
+        //         if(reset){
+        //             i = -1;
+        //         }
+        //     }
+        // }
+
+        // var g = f1();
+        // console.log(g.next()); 
+        // console.log(g.next());
+        // console.log(g.next(true));
+
+
+        // function* foo(x){
+        //     var y = 2 * (yield(x+1));
+        //     var z = yield(y/3);
+        //     return (x + y + z);
+        // }
+
+        // var b = foo(5);
+        // console.log(b.next());//这里传入了一个5 遇到了yield返回x+1 = 6
+        // console.log(b.next(12));// 这里把上一个yield设置为12 2*12 = 24所以第二个yield的值为8
+        // console.log(b.next(13));// 把上一次的值设为13 z = 13 x=5 y = 24 13+5+24 = 42
+
+
+        //for of循环
+
+        // function* foo(){
+        //     yield 1;
+        //     yield 2;
+        //     yield 3;
+        //     yield 4;
+        //     yield 5;
+        //     return 6;
+        // }
+
+        // for(let item of foo()){
+        //     console.log(item)
+        // }
+
+        //for...of循环可以自动遍历 Generator 函数时生成的Iterator对象，且此时不再需要调用next方法 return返回的6done为6所以循环终止
+
+        function* fibonacci(){
+            let [prev, curr] = [0, 1];
+            for(;;){
+                [prev , curr] = [curr , prev + curr];
+                yield curr;
+            }
+        }
+
+        for(let item of fibonacci()){
+            if(item > 1000) break;
+            console.log(item)
+        }
+        
+        // 由此可见 for of是 默认已经使用了next方法的 
+
+        // function* gen(x) {
+        //     try {
+        //         var y = yield x + 2;
+        //     } catch (error) {
+        //         console.log(error)
+        //     }
+        //     return x;
+        // }
+
+        // var g = gen(1);
+        // g.next();
+        // console.log(g.next()) // { value: 3, done: false }
+        // g.throw("出错了");
+    </script>
+</body>
+
+</html>

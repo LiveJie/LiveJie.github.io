@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Webpack Sample Project</title>
+</head>
+
+<body>
+  <div id='root'>
+  </div>
+  <script>
+    // let x = 99;
+    // function foo(p = x+1){
+    // 	console.log(p)
+    // }
+    // foo(); // 100
+    // x = 100;
+    // foo();//101
+
+    //  function add(...value){
+    //  	let sum = 0;
+    //  	for( let val of value){
+    //  		sum += val;
+    //  	}
+
+    //  	console.log(sum)
+    //  }
+    //  add(1,2,3,4);
+
+    // function arr(a, ...items) {
+    //   return items;
+    // }
+
+    // console.log(arr(1, 2, 3, 4, 5))
+
+    // var arr1 = [1, 2, 3];
+    // var arr2 = [4, 5, 6];
+    // var arr3 = [7, 8, 9];
+    // arr1.push(...arr2);
+    // console.log(arr1)//123456
+
+    // // 数组合并
+    // var c = [...arr1, ...arr2, ...arr3]
+    // console.log(c)//123456789
+
+    // let arrayLike = {
+    //   '0': 'a',
+    //   '1': 'b',
+    //   '2': 'c',
+    //   length: 3
+    // };
+
+    // // TypeError: Cannot spread non-iterable object.
+    // let arr = [...arrayLike];
+    // let arr = [Array.from(arrayLike)];//使用Array.from()把伪数组转成真正的数组
+    // console.log(arr)
+
+    // var s = new Set();
+    // [5,1,2,3,1,1,1,2,5].map(x=>s.add(x));
+    // for(let item of s){
+    //   console.log(item)
+    // }
+
+    // var json = {
+    //   0: { a: 1, b: 2 },
+    //   1: { a: 3, b: 4 },
+    //   2: { a: 5, b: 6 },
+    //   3: { a: 7, b: 8 },
+    //   4: { a: 9, b: 10 },
+    // }
+    // let arr = [,1, 2, 3, 4, 5,];
+    // for (let i of arr.entries()) {
+    //   console.log(i)
+    // }
+    // for(let i of arr.values()){
+    //   console.log(i)
+    // }
+    // for (let elem of ['a', 'b'].values()) {
+    //   console.log(elem);
+    // }
+    // for (let index of arr.keys()) {
+    //   if(index==4){
+    //     console.log(6)
+    //   }
+    //   // console.log(index)
+    // }
+    // 数组去空
+    // let arr1 = arr.filter(item=>item);
+    // arr.forEach(element => console.log(element));//123456
+    // console.log(arr1)//12345
+    // console.log(arr.includes(10))
+    // var a = "html";
+    // const html = {
+    //   name:'12',
+    //   a,
+    //   hello(){
+    //     console.log(this.name)
+    //   },
+    //   init:function(type){
+    //     return type;
+    //   }
+    // }
+    // console.log(html.init(a));
+    // var arr = [
+    //   { "省代码": "1101", "市代码": "1000", "区县代码": "1000", "省": "北京市1", "市": "北京市", "区县": "东城区" },
+    //   { "省代码": "1102", "市代码": "1000", "区县代码": "1001", "省": "北京市2", "市": "北京市", "区县": "西城区" },
+    //   { "省代码": "1103", "市代码": "1000", "区县代码": "1001", "省": "北京市3", "市": "北京市", "区县": "西城区" },
+    // ]
+    // // console.log(Array.isArray(arr))
+    // var newArr = new Map();
+    // var arr1 = [];
+    // var arr2 = [];
+    // for(let item of arr){
+    //   arr1.push(item.省代码)
+    // }
+    // for(let item of arr){
+    //   arr2.push(item.省)
+    // }
+    // for(let i=0;i<arr.length;i++){
+    //   newArr.set(arr2[i],arr1[i])
+    // }
+    // var map = new Map();
+    // map.set('a',1);
+    // map.set('b',2);
+    // map.set('c',3);
+    // console.log(JSON.stringify(map));
+    // console.log(JSON.stringify([...map]));
+    // console.log(newArr)
+
+    var proxy = new Proxy({}, {
+      get: function (target, property) {
+        return 35;
+      },
+      time: function () {
+        return 1;
+      }
+    });
+
+    let obj = Object.create(proxy);
+    console.log(obj.time) // 35
+
+    var pipe = (function () {
+      return function (value) {
+        var funcStack = [];
+        var oproxy = new Proxy({}, {
+          get: function (pipeObject, fnName) {
+            if (fnName === 'get') {
+              return funcStack.reduce(function (val, fn) {
+                return fn(val);
+              }, value);
+            }
+            funcStack.push(window[fnName]);
+            return oproxy;
+          }
+        });
+
+        return oproxy;
+      }
+    }());
+
+    var double = n => n * 2;
+    var pow = n => n * n;
+    var reverseInt = n => n.toString().split("").reverse().join("") | 0;
+
+    pipe(3).double.pow.reverseInt.get; // 63
+
+    
+  </script>
+</body>
+
+</html>

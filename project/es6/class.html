@@ -1,0 +1,102 @@
+<html>
+
+<body>
+    <script>
+        // 传统实例化对象
+        // function   Point(x,y){
+        //     this.x = x;
+        //     this.y = y;
+        // }
+        // Point.prototype.toString = function(){
+        //     return this.x+"=="+this.y;
+        // }
+
+        // var p = new Point(1,2);
+        // console.log(p)
+
+        // // class方法
+        // class Point1{
+        //     constructor(x,y){
+        //         this.x = x;
+        //         this.y = y;
+        //     }
+
+        //     toString(){
+        //         return this.x+"=="+this.y
+        //     }
+        // }
+
+        // var b = new Point1(1,2);
+        // console.log(b.toString()) 
+        // 都会默认使用toString方法
+
+
+        // class Person{
+        //     constructor(name,age,sex){
+        //         this.name = name;
+        //         this.age = age;
+        //         this.sex =sex;
+        //     }
+        //     say(){
+        //         return "我今年"+this.age+"岁\n"+this.sex+"\n"+this.name;
+        //     }
+
+        //     eat(){
+        //         return "我喜欢吃好吃的东西！"
+        //     }
+
+        //     walk(){
+        //         return "我会走路！"
+        //     }
+        // }
+
+        // var per = new Person('杰哥',21,'男');
+        // per.__proto__.run = function(){return "我在奔跑"}
+        // // 使用__proto__给类添加方法
+        // console.log(per.say());
+        // console.log(per.eat());
+        // console.log(per.walk());
+        // console.log(per.run());
+
+        //class的静态方法 不会被实例化继承只能通过类来调用或者被子类继承
+
+        // class foo{
+        //     static param(){
+        //         console.log("我不能被实例化继承")
+        //     }
+        // }
+
+        // var foo2 = new foo();
+        // foo.param();
+        // foo2.param();//实例化的时候调用static方法报错
+
+        // let foo = class foo{
+        //     static ab(){
+        //         console.log("子类继承")
+        //     }
+        // }
+
+        // class foo1 extends foo{}
+        // foo1.ab();//子类继承
+
+        
+
+        // 子类必须在constructor方法中调用super方法，否则新建实例时会报错。
+        //这是因为子类没有自己的this对象，而是继承父类的this对象，然后对其进行加工。
+        //如果不调用super方法，子类就得不到this对象。
+
+
+        
+
+
+
+
+
+
+            /*
+
+            */
+    </script>
+</body>
+
+</html>

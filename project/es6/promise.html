@@ -1,0 +1,161 @@
+<html>
+    <body>
+        <script>
+            // const promise = new Promise(function(resolve , reject){
+            //     if(resolve){
+            //         resolve(value);
+            //     }else{
+            //         reject(error);
+            //     }
+            // })
+            // function timeout(ms){
+            //     return new Promise((resolve,reject)=>{
+            //         setTimeout(resolve,ms,'done');
+            //     });
+            // }
+
+            // timeout(100).then((value)=>{
+            //     console.log(value)
+            // },function(error){
+            //     console.log(error)
+            // })
+
+
+            // promise函数一建立就回马上执行
+
+            // let promise1 = new Promise(function(resolve,reject){
+            //     console.log(1);
+            //     resolve();
+            // })
+
+            // promise1.then((value)=>{
+            //     console.log(value+"=="+1)
+            // },(error)=>{
+            //     console.log(error+"=="+1)
+            // })
+
+            // console.log(2)
+            // 1 2 undefined==1
+
+            // const p1 = new Promise((resolve,reject)=>{
+            //     // console.log(1)
+            // })
+
+            // const p2 = new Promise((resolve,reject)=>{
+            //     resolve(p1)
+            // })
+
+            // p2的异步操作返回的是p1的
+            
+            // const p1 = new Promise((resolve,reject)=>{
+            //     setTimeout(reject(()=>{
+            //         new Error('fail')
+            //     }),3000)
+            // })
+
+            // const p2 = new Promise((resolve,reject)=>{
+            //     setTimeout(()=>resolve(p1),1000)
+            // })
+
+            // p2.then(result=>console.log(result)).catch(error=>console.log(error))
+
+            // const someAsyncThing = function(){
+            //     return new Promise((resolve,reject)=>{
+            //         resolve(x+2)
+            //     })
+            // }
+
+            // someAsyncThing().then(function(){
+            //     console.log('everything is great');
+            // })
+
+            // setTimeout(()=>{ console.log(123) },2000)
+
+            // const someAsyncThing = function() {
+            // return new Promise(function(resolve, reject) {
+            //     // 下面一行会报错，因为x没有声明
+            //     resolve(x + 2);
+            // });
+            // };
+
+            // someAsyncThing()
+            // .catch(function(error) {
+            // console.log('oh no', error);
+            // })
+            // .then(function() {
+            // console.log('carry on');
+            // });
+            // // 用catch可以捕捉到错误 因为错误返回的是promise的函数 所以还可以继续.then操作
+
+            
+            // race函数  可以用于请求数据超时的回调
+            // function requestImg(){
+            //     var p = new Promise((resolve,reject)=>{
+            //         var img = new Image();
+            //         img.onload = function(){
+            //             resolve(img);
+            //         }
+            //         img.src = 'http://img.php.cn//upload/image/532/528/239/1494231227847092.jpg'
+            //     })
+            //     return p;
+            // }
+
+            // function timeout (){
+            //     var p = new Promise((resolve,reject)=>{
+            //         setTimeout(()=>{
+            //             reject('图片请求超时')
+            //         },5000)
+            //     })
+            //     return p;
+            // }
+
+            // Promise.race([requestImg(), timeout()])
+            // .then((results)=>{console.log(results)})
+            // .catch((reason)=>{console.log(reason)})
+
+            // function getNumber(){
+            //     var p = new Promise((resolve,reject)=>{
+            //         setTimeout(()=>{
+            //             let num = ~~(Math.random()*10)
+            //             if(num>5){
+            //                 resolve(num+'大于5');
+            //             }else{
+            //                 reject(num+"少于5")
+            //             }
+            //         })
+            //     })
+            //     return p;
+            // }
+            // getNumber().then((data)=>{console.log(data)},(data)=>{console.log(data)})
+            // 在这里then有俩个 回调 一个对应是resolve的回调 一个是reject的回调
+            
+            //Promise的优势  可以使回调更加好看 可以异步执行
+
+            // function pri1(){
+            //     var p = Promise.resolve('1');
+            //     return p;
+            // }
+            // function pri2(){
+            //     var p = Promise.resolve('2');
+            //     return p;
+            // }
+            // function pri3(){
+            //     var p = Promise.resolve('3');
+            //     return p;
+            // }
+
+            // pri1().then((data)=>{
+            //     console.log(data)
+            //    return pri2()
+            // }).then((data)=>{
+            //     console.log(data)
+            //    return pri3()
+            // }).then((data)=>{
+            //     console.log(data)
+            // })
+            // 可以很优雅的链式回调
+
+
+        </script>
+    </body>
+</html>

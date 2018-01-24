@@ -1,0 +1,144 @@
+<html>
+
+<body>
+    <script>
+        // var proxy = new Proxy({},{
+        //     get: function(targer,property){
+        //         return 35;
+        //     }
+        // })
+        // console.log(proxy.time);//35  因为proxy上面并没有time属性所以被拦截 然后被代理函数处理 返回35
+
+        // var target = {};
+        // var header = {};
+        // var proxy = new Proxy(target,header);
+        // proxy.a = 'b';
+        // console.log(target.a); // b
+
+        // var person = {
+        //     name: 'jiege',
+        //     eat: function () {
+        //         console.log("吃饭");
+        //     },
+        //     wark: function () {
+        //         console.log("走路");
+        //     }
+        // }
+
+        // var proxy = new Proxy(person, {
+        //     get: function (target, property) {
+        //         if (property in target) {
+        //             return target[property]
+        //         } else {
+        //             throw '属性不存在';
+        //         }
+        //     }
+        // })
+        // console.log(proxy.name);
+        // console.log(proxy.eat());
+        // console.log(proxy.wark());
+        // console.log(proxy.warks);
+        // proxy 会拦截目标函数没有的东西
+       
+        var double = n => n * 2;
+        var pow = n => n * n;
+        var reverseInt = n => n.toString().split("").reverse().join("") | 1;
+
+        var obj = (function(){
+            return function(value){
+                var arr = [];
+                var proxy = new Proxy({},{
+                    get: function(target, fnName){
+                        if(fnName === 'get'){
+                            return arr.reduce(function(val,fn){
+                                return fn(val)
+                            },value)
+                        }
+                        arr.push(window[fnName]);
+                        return proxy;
+                    }
+                })
+                return proxy;
+            }
+        })()
+        console.log(obj(5).double.pow.reverseInt.get); // 1
+        // 当函数.的属性不存在的时候 就执行预处理的内容
+
+        // let setproxy = {
+        //     set: function(obj, prop, value){
+        //         // console.log(obj) //对象
+        //         // console.log(prop)// 键值
+        //         // console.log(value)// 键名
+        //         if(prop === 'age'){
+        //             if(!Number.isInteger(value)){
+        //                 throw '1'
+        //             }
+        //         }
+        //         if(value > 200){
+        //             throw '2'
+        //         }
+        //         // obj[prop] = value;
+        //         console.log(value)
+        //     }
+        // }
+
+        // let person = new Proxy({},setproxy);
+        // person.age = 100;
+        // person.age;
+        // person.age = 'young';
+        // person.age = 300;
+
+        // let setproxy = {
+        //     set: function(obj , name , value){
+        //         if(name === 'age'){
+        //             if(!Number.isInteger(value)){
+        //                 throw 'age不是数字'
+        //             }
+        //             if(value > 200){
+        //                 throw 'age不能大于200'
+        //             }
+        //             console.log(value)
+        //         }
+        //     }
+        // }
+
+        // let person = new Proxy({},setproxy);
+        // person.age = 100;
+        // person.age = 200;
+        // person.age = '呵呵哒';
+
+        // // 这里是为了访问person不存在的值预处理
+
+
+        let setproxy = {
+            set: function(obj , name , value){
+                if(obj[name]){
+                    obj[name](value)
+                }else{
+                    throw 'function is not defined'
+                }
+            }
+        }
+
+        let person = new Proxy({
+            age:function(val){
+                console.log(val)
+            },
+            name:function(val){
+                console.log(val)
+            }
+        },setproxy);
+        person.age = 100;
+        person.age = 200;
+        person.name = '呵呵哒';
+        person.gg = '呵呵哒';
+
+        // 当访问不存在的方法的时候通过预处理器抛出错误
+
+        /*
+            总的来说 get 是预处理读取属性  set是预处理设置属性
+        */
+    </script>
+</body>
+
+</html>

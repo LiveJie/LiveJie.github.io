@@ -1,0 +1,32 @@
+<html>
+
+<head>
+    <title>Iterator(迭代器)</title>
+</head>
+
+<body>
+    <script>
+
+        // let arr = ['a', 'b', 'c'];
+        // let iter = arr[Symbol.iterator]();
+        // console.log(iter.next());
+        // console.log(iter.next());
+        // console.log(iter.next());
+        // console.log(iter.next());
+
+        let obj = {
+            *[Symbol.iterator]() {
+                yield 'hello';
+                yield 'world';
+            }
+        }
+
+        for (let i of obj) {
+            console.log(i)
+        }
+
+ 
+    </script>
+</body>
+
+</html>

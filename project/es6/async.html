@@ -1,0 +1,108 @@
+<html>
+
+<body>
+    <script>
+        // function timeout(ms) {
+        //     return new Promise((resolve) => {
+        //         setTimeout(resolve, ms);
+        //     });
+        // }
+
+        // async function asyncPrint(value, ms) {
+        //     await timeout(ms);
+        //     console.log(value);
+        // }
+
+        // asyncPrint('hello world', 50);
+
+        // // 套餐模板
+
+        // function time(ms){
+        //     return new Promise((resolve)=>{
+        //         setTimeout(resolve,ms)
+        //     })
+        // }
+
+        // async function fn(value,ms){
+        //     await time(ms);
+        //     alert(value)
+        // }
+
+        // fn ("哈哈",5000)
+
+        // async函数的使用形式
+
+        // //函数声明
+        // async function as(){}
+
+        // //函数表达式
+        // const foo = async function(){}
+
+        // //对象声明
+        // let obj = {async foo(){}};
+        // obj.foo().then();
+
+        // // 箭头函数
+        // const  foo1 = ()=>{};
+
+        // async 返回的是一个promise对象
+
+        // async function a(){
+        //     return "hello";
+        // }
+
+        // a().then(item=>{
+        //     console.log(item)
+        // })
+
+        // async function foo(){
+        //     throw new Error ('出错了');
+        //     // return '123'
+        // }
+        // // then有俩个参数  一个对应的是resolve 一个对应的是reject
+        // foo().then(
+        //     v=>{console.log(v+"=="+1)},
+        //     e=>{console.log(e+"=="+2)}
+        // )
+
+        // async function getTitle(url) {
+        //     let response = await fetch(url);
+        //     let html = await response.text();
+        //     return html.match(/<title>([\s\S]+)<\/title>/i)[1];
+        // }
+        // getTitle('https://tc39.github.io/ecma262/').then(console.log)
+
+        // async function f() {
+        //     try {
+        //         await new Promise((a, b) => {
+        //             throw new Error("出错了");
+        //         });
+        //     } catch (error) {
+        //         console.log(2)                
+        //     }
+        //     return await  Promise.reject("哈哈");
+        // }
+
+        // f().then(
+        //     v => { console.log(v + "==" + 1) },
+        //     e => { console.log(e + "==" + 2) }
+        // ).catch(console.log(3))
+        // 首先return了一个primose的reject 被thencatch捕捉到了 所以先执行catch操作然后函数内部的try的catch执行 最后才是return的
+        // 防止出错中断进程 可以使用try 来捕捉错误什么的
+
+        async function* gen(){
+            yield 'a';
+            yield 'b';
+            return 2;
+        }
+
+        async function* gen1(){
+            const result = yield* gen();
+            console.log(result);
+        }
+        gen1();
+        
+    </script>
+</body>
+
+</html>

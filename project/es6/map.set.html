@@ -1,0 +1,31 @@
+<html>
+    <body>
+        <script>
+
+            let map = new Map().set('a',1).set('b',2);
+            for(let item of map){
+                console.log(item)
+            }
+            // ['a', 1]
+            // ['b', 2]
+            for(let [key,value] of map){
+                console.log(key+"=="+value)
+            }
+
+            // a: 1
+            // b: 2
+
+            let arr = ['a','b','c'];
+            for(let item of arr.entries()){
+                console.log(item)
+            }
+            // 返回键值对
+            for(let item of arr){
+                console.log(item)
+            }
+            // 返回值
+
+            
+        </script>
+    </body>
+</html>

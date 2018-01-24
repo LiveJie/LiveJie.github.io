@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+</head>
+
+<body>
+  <div id='root'>
+  </div>
+  <script>
+    //   let s1  = Symbol('first');
+    //   let s2  = Symbol('two');
+    //   console.log(s1);
+    //   console.log(s2);
+
+    //   const obj = {
+    //       toString(){
+    //           return 'abc';
+    //       }
+    //   }
+    //   let s4 = Symbol(obj);
+    //   console.log(s4);
+
+      // Symbol 一个对象的时候回默认调用该对象的toString方法 toString把一个boolean转化成一个字符串类型
+
+    //   let a = true;
+    //   console.log(a)
+
+    //   let a1 = Symbol();
+    //   let a2 = Symbol();
+    //   console.log(a1==a2);// false
+
+
+    //   let b1 = Symbol('a');
+    //   let b2 = Symbol('a');
+    //   console.log(b1==b2) // false 
+      //Symbol 是唯一的 所以虽然都是Symbol()函数 但是并不相等
+
+    //   let c = Symbol('My Symbol');
+    //   var c1 = c+ '12'; // Cannot convert a Symbol value to a string
+    //   var c2 = `${c}+12`;  //  Cannot convert a Symbol value to a string
+    //   console.log(c1)//Symbol 不能和其他值一起运算，会报错
+
+    //   let d = Symbol();
+    //   Boolean(d); //Symbol 可以转换成boolean值  但是不能进行运算
+    //   console.log(!d); // false
+    //   console.log(Number(d));// 不能转换成数字
+
+    // let mySymbol = Symbol();
+    // let a = {};
+    // a[mySymbol] = 'Hello';
+    // let a = {
+    //     [mySymbol] : 'Hello'
+    // }
+    // let a = {};
+    // Object.defineProperty(a,mySymbol,{value:'Hello!'})
+    // console.log(a);
+
+    // let s = Symbol();
+    // let obj = {
+    //     [s]:function(arg){console.log(arg)}
+    // }
+    // obj[s](666);// s必须加上中括号来表示s是Symbol
+
+    // log.levels = {
+    //     DEBUG: Symbol('debug'),
+    //     INFO: Symbol('info'),
+    //     WARN: Symbol('warn')
+    // };
+    // console.log(log.levels.DEBUG,'debug message')
+
+    var a = 10;
+    let fun = function(){
+        console.log(a)
+        if(false){
+            var a = 11;
+        }
+    }
+    fun() // undefined
+
+    function f1(){
+        let a = 5;
+        if(true){
+            let a = 10;
+        }
+        console.log(a)
+    };
+    f1();
+
+    var module = function(){
+        var obj = {}
+        obj.init = function(){
+            console.log(1)
+        }
+        obj.eat = function(){
+            console.log(2)
+        }
+        return obj;
+    }()
+    module.init();
+    module.eat();
+  </script>
+</body>
+
+</html>
