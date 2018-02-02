@@ -21,7 +21,7 @@ ul li{list-style: none}
 #list .l-left:after{content: "";position: absolute;right: -12px;width: 0;height: 0;border-top: 12px solid transparent;border-left: 12px solid rgba(0,0,0,.7);border-bottom: 12px solid transparent;}
 #list .l-on{opacity: 1}
 .p1-main{padding-top:200px;}
-.p1-main .icon{width:150px;height:150px;border-radius:100%;background:url(../images/jie.jpg) no-repeat top / cover;margin:0 auto;transition: .3s all;-webkit-transition:.3s all;}
+.p1-main .icon{width:150px;height:150px;border-radius:100%;background:url(../images/bg.jpg) no-repeat top / cover;margin:0 auto;transition: .3s all;-webkit-transition:.3s all;}
 .p1-main .icon:hover{box-shadow:0 0 2em rgba(200,231,190,0.9)}
 .p1-main .p1-desc{max-width: 90%;margin:0 auto;text-align:center;}
 .p1-main .p1-desc h1{font-size:22px;font-weight:400;padding:20px 0;margin-top:20px;position: relative;}
