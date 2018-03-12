@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>电脑性能测试</title>
+	<link rel="stylesheet" href="">
+</head>
+
+<body>
+	<script>
+		window.onload = function(){
+			let startT = new Date();
+			for (let i = 0; i <= 10000000000; i++) {
+				if (i >= 10000000000) {
+					let diff = ~~(new Date() - startT) / 1000;
+					if (diff < 10) {
+						alert("用时" + diff + "秒，王者电脑")
+					} else if (10 <= diff && diff <= 20) {
+						alert("用时" + diff + "秒，铂金电脑")
+					} else {
+						alert("用时" + diff + "秒，青铜电脑")
+					}
+				}
+			}
+		}
+	</script>
+</body>
+
+</html>
